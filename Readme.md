@@ -4,24 +4,23 @@
 
 ### 编辑环境准备
 
-1. 准备Linux操作系统环境（Gentoo Linux安装过程略过）
-
-2. 软件包安装
+1. 准备 `Alpine Container`
    ```shell
-   echo \
-   app-arch/{bzip2,sharutils,unzip,zip} sys-process/time \
-   app-text/asciidoc \
-   dev-libs/{libusb-compat,libxslt,openssl} dev-util/intltool \
-   dev-vcs/{git,mercurial} net-misc/{rsync,wget} \
-   sys-apps/util-linux sys-devel/{bc,bin86,dev86} \
-   sys-libs/{ncurses,zlib} virtual/perl-ExtUtils-MakeMaker \
-   | sed "s/\s/\n/g" \
-   | sort \
-   | tee /etc/portage/sets/openwrt-prerequisites \
-   && emerge -DuvNa "@openwrt-prerequisites"
+   systemd-nspawn -D /alpine-root \
+       --bind /root/openwrt:/openwrt \
+       --bind /tmp:/tmp
+   ```
+   
+3. 软件包安装
+   ```shell
+   apk add argp-standalone bash bc binutils bzip2 coreutils diffutils \
+       elfutils-dev findutils flex musl-fts-dev g++ gawk gcc gettext git \
+       grep gzip linux-headers make musl-libintl musl-obstack-dev \
+       ncurses-dev openssl-dev patch perl python3 tar \
+       unzip util-linux wget zlib-dev
    ```
 
-3. 仓库克隆
+4. 仓库克隆
 
    ```shell
    # Download and update the sources
@@ -35,7 +34,7 @@
    git checkout v24.10.1
    ```
 
-4. Update the feeds
+5. Update the feeds
 
    > `feeds.conf.my`
    >
@@ -50,7 +49,7 @@
    ./scripts/feeds install -a -f
    ```
 
-5. Choose package
+6. Choose package
 
    ```shell
    make menuconfig # Configure the firmware image
@@ -93,7 +92,7 @@
    		-> <*> fish
    ```
 
-6. 开始编译
+7. 开始编译
 
    > llvm版Gentoo Linux需修改gcc路径，其他操作系统忽略此步
    >
