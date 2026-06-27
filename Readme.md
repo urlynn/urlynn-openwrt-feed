@@ -4,14 +4,37 @@
 
 ### 编辑环境准备
 
-1. 准备 `Alpine Container`
-2. hx /usr/local/bin/openwrt
-   ```shell
-   #!/bin/sh
-   export SYSTEMD_COLORS=0
-   exec systemd-nspawn -q -D /alpine-root   --bind /root/openwrt:/openwrt   --bind /tmp:/tmp   --chdir=/openwrt   "$@"
+
+1. 准备 `Alpine rootfs`
+   
+   ```bash
+   bash -c "
+     mkdir -p /alpine-root
+     mkdir -p /root/openwrt
+     cd /alpine-root
+     curl -OL https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/x86_64/alpine-minirootfs-3.21.3-x86_64.tar.gz
+     tar xzf alpine-minirootfs-*.tar.gz
+     rm alpine-minirootfs-*.tar.gz
+   "
    ```
    
+2. `Container` 入口脚本
+
+   ```bash
+   bash -c '
+   cat > /usr/local/bin/openwrt << '\''EOF'\''
+   #!/bin/sh
+   export SYSTEMD_COLORS=0
+   exec systemd-nspawn -q -D /alpine-root \
+     --bind /root/openwrt:/openwrt \
+     --bind /tmp:/tmp \
+     --chdir=/openwrt \
+     "\$@"
+   EOF
+   chmod +x /usr/local/bin/openwrt
+   '
+   ```
+      
 3. 软件包安装
    ```shell
    apk add argp-standalone asciidoc bash bc binutils bzip2 cdrkit coreutils \
