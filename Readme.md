@@ -5,10 +5,11 @@
 ### 编辑环境准备
 
 1. 准备 `Alpine Container`
+2. hx /usr/local/bin/openwrt
    ```shell
-   systemd-nspawn -D /alpine-root \
-       --bind /root/openwrt:/openwrt \
-       --bind /tmp:/tmp
+   #!/bin/sh
+   export SYSTEMD_COLORS=0
+   exec systemd-nspawn -q -D /alpine-root   --bind /root/openwrt:/openwrt   --bind /tmp:/tmp   --chdir=/openwrt   "$@"
    ```
    
 3. 软件包安装
