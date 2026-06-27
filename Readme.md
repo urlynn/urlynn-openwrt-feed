@@ -55,7 +55,7 @@
    # Select a specific code revision
    git branch -a
    git tag
-   git checkout v24.10.1
+   git checkout v24.10.7
    ```
 
 5. Update the feeds
