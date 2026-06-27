@@ -13,11 +13,11 @@
    
 3. 软件包安装
    ```shell
-   apk add argp-standalone bash bc binutils bzip2 coreutils diffutils \
-       elfutils-dev findutils flex musl-fts-dev g++ gawk gcc gettext git \
-       grep gzip linux-headers make musl-libintl musl-obstack-dev \
-       ncurses-dev openssl-dev patch perl python3 tar \
-       unzip util-linux wget zlib-dev
+   apk add argp-standalone asciidoc bash bc binutils bzip2 cdrkit coreutils \
+     diffutils elfutils-dev findutils flex musl-fts-dev g++ gawk gcc gettext git \
+     grep gzip intltool libxslt linux-headers make musl-libintl musl-obstack-dev \
+     ncurses-dev openssl-dev patch perl python3-dev rsync tar \
+     unzip util-linux wget zlib-dev
    ```
 
 4. 仓库克隆
