@@ -12,7 +12,7 @@
      mkdir -p /alpine-root
      mkdir -p /root/openwrt
      cd /alpine-root
-     curl -OL https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/x86_64/alpine-minirootfs-3.21.3-x86_64.tar.gz
+     curl -OL https://dl-cdn.alpinelinux.org/alpine/v3.24/releases/x86_64/alpine-minirootfs-3.24.1-x86_64.tar.gz
      tar xzf alpine-minirootfs-*.tar.gz
      rm alpine-minirootfs-*.tar.gz
    "
