@@ -118,18 +118,9 @@
 
 7. 开始编译
 
-   > llvm版Gentoo Linux需修改gcc路径，其他操作系统忽略此步
-   >
-   > ```shell
-   > rm ~/openwrt/staging_dir/host/bin/gcc
-   > rm ~/openwrt/staging_dir/host/bin/g++
-   > ln -s /usr/bin/gcc ~/openwrt/staging_dir/host/bin/gcc
-   > ln -s /usr/bin/g++ ~/openwrt/staging_dir/host/bin/g++
-   > ```
-
    ```shell
-   make download -j24 V=s
-   make V=s -j(nproc); or make V=s -j1
+   make download -j32 V=s
+   make V=s -j32 || make V=s -j1
    ```
 
    编译完成后，生成的文件路径为`~/openwrt/bin/targets/x86/64/openwrt-x86-64-generic-rootfs.tar.gz`
