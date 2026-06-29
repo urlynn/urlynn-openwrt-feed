@@ -41,7 +41,7 @@ endef
 define Build/Compile
 	cd $(PKG_BUILD_DIR) && \
 	HELIX_DEFAULT_RUNTIME="/usr/lib/helix/runtime" \
-	CARGO_$(RUST_TARGET_ENV)_LINKER="$(TARGET_CROSS)gcc" \
+	CARGO_$(RUST_TARGET_ENV)_LINKER="gcc" \
 	RUSTUP_TOOLCHAIN=stable \
 	RUSTFLAGS="-C target-feature=-crt-static -C target-cpu=$(CPU_TARGET)" \
 	cargo build --release --target $(RUST_TARGET) --locked
