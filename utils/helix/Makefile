@@ -41,7 +41,7 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	sed -i 's/except = \[.*\]/only = ["awk","bash","c","cpp","comment","css","diff","fish","git-config","gitattributes","gitcommit","gitignore","hosts","html","ini","javascript","json","lua","make","markdown","nginx","python","regex","ssh_client_config","toml","xml","yaml"]/' $(PKG_BUILD_DIR)/languages.toml
+	sed -i 's/except = \[.*\]/only = ["bash","c","cpp","comment","css","diff","fish","hosts","html","ini","javascript","json","lua","make","markdown","nginx","python","regex","ssh_client_config","toml","xml","yaml"]/' $(PKG_BUILD_DIR)/languages.toml
 endef
 
 define Build/Configure
