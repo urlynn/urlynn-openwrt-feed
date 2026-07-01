@@ -31,8 +31,17 @@ define Package/helix/description
   A Kakoune / Neovim inspired editor, written in Rust.
 endef
 
+define Package/helix-runtime
+  DEPENDS:=+libstdcpp
+  CATEGORY:=Utilities
+  SUBMENU:=Editors
+  TITLE:=Helix runtime data (grammars, themes, queries)
+  URL:=https://helix-editor.com
+endef
+
 define Build/Prepare
 	$(call Build/Prepare/Default)
+	sed -i 's/except = \[.*\]/only = ["awk","bash","c","cpp","comment","css","diff","fish","git-config","gitattributes","gitcommit","gitignore","hosts","html","ini","javascript","json","lua","make","markdown","nginx","python","regex","ssh_client_config","toml","xml","yaml"]/' $(PKG_BUILD_DIR)/languages.toml
 endef
 
 define Build/Configure
@@ -43,15 +52,21 @@ define Build/Compile
 	HELIX_DEFAULT_RUNTIME="/usr/lib/helix/runtime" \
 	CARGO_$(RUST_TARGET_ENV)_LINKER="$(TARGET_CROSS)gcc" \
 	RUSTUP_TOOLCHAIN=stable \
-	RUSTFLAGS="-C target-feature=+crt-static -C target-cpu=$(CPU_TARGET)" \
-	cargo build --release --target $(RUST_TARGET) --locked
+	RUSTFLAGS="-C target-feature=-crt-static -C target-cpu=$(CPU_TARGET) -C lto=yes -C codegen-units=1 -C panic=abort" \
+	/home/openwrt/.cargo/bin/cargo build --release --target $(RUST_TARGET) --locked
 endef
 
 define Package/helix/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/usr/lib/helix/runtime
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/target/$(RUST_TARGET)/release/hx $(1)/usr/bin/
+	$(TARGET_CROSS)strip $(1)/usr/bin/hx
+endef
+
+define Package/helix-runtime/install
+	$(INSTALL_DIR) $(1)/usr/lib/helix/runtime
 	$(CP) $(PKG_BUILD_DIR)/runtime/* $(1)/usr/lib/helix/runtime/
+	rm -rf $(1)/usr/lib/helix/runtime/grammars/sources
 endef
 
 $(eval $(call BuildPackage,helix))
+$(eval $(call BuildPackage,helix-runtime))
