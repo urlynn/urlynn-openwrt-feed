@@ -53,7 +53,7 @@ define Build/Compile
 	CARGO_$(RUST_TARGET_ENV)_LINKER="$(TARGET_CROSS)gcc" \
 	RUSTUP_TOOLCHAIN=stable \
 	RUSTFLAGS="-C target-feature=-crt-static -C target-cpu=$(CPU_TARGET) -C lto=yes -C codegen-units=1 -C panic=abort" \
-	/home/openwrt/.cargo/bin/cargo build --release --target $(RUST_TARGET) --locked
+	cargo build --release --target $(RUST_TARGET) --locked
 endef
 
 define Package/helix/install
