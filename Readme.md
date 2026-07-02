@@ -136,6 +136,12 @@
 
 ## ProxmoxVE 容器篇
 
+### 加载模块
+```shell
+echo 'dummy' >> /etc/modules
+echo 'nft_socket' >> /etc/modules
+```
+
 ### 自动化脚本
 
 > `new.sh`
